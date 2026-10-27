@@ -27,6 +27,16 @@
 - [GitHub CLI](https://cli.github.com) with at least one account logged in (`gh auth login`)
 - Xcode or the Command Line Tools (`xcode-select --install`) to build
 
+## Download
+
+Grab `GitHub-Switcher-<version>.zip` from the [latest release](https://github.com/ptnzzn/github-switcher/releases/latest), unzip it and move **GitHub Switcher.app** to `/Applications` or `~/Applications`. It is a universal build (Apple silicon and Intel).
+
+The app is ad-hoc signed, not notarized, so macOS blocks it on first launch. Either right-click the app → **Open** → **Open**, or run:
+
+```bash
+xattr -dr com.apple.quarantine "/Applications/GitHub Switcher.app"
+```
+
 ## Build & install
 
 ```bash
@@ -36,7 +46,7 @@ cd github-switcher
 open ~/Applications/"GitHub Switcher.app"
 ```
 
-`build.sh` compiles the app with `swiftc`, generates the icon set, ad-hoc signs the bundle and installs it to `~/Applications`.
+`build.sh` compiles a universal binary with `swiftc`, generates the icon set, ad-hoc signs the bundle and installs it to `~/Applications` (`--no-install` to skip that). `release.sh` builds and packages `dist/GitHub-Switcher-<version>.zip`.
 
 To start it at login, add it in **System Settings → General → Login Items**.
 
@@ -68,6 +78,7 @@ Sources/main.swift      The whole app (SwiftUI MenuBarExtra)
 Icon/make_icon.swift    Draws Icon/icon.png (1024×1024)
 Icon/icon.png           Source image for the app icon
 build.sh                Build, sign and install script
+release.sh              Build and zip a release
 ```
 
 To change the icon, edit `Icon/make_icon.swift`, then:
